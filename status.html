@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    $(if refresh-timeout)
+    <meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+    $(endif)
+    <meta charset="utf-8">
+    <title>Logout</title>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pagina di login con bootstrap e HTML5 per Mikrotik">
+    <meta name="author" content="Informatica Today">
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 60px;
+        }
+
+        /* Custom container */
+        .container {
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        .container > hr {
+            margin: 60px 0;
+        }
+
+        /* Main marketing message and sign up button */
+        .jumbotron {
+            margin: 80px 0;
+            text-align: center;
+        }
+        .jumbotron h1 {
+            font-size: 100px;
+            line-height: 1;
+        }
+        .jumbotron .lead {
+            font-size: 24px;
+            line-height: 1.25;
+        }
+        .jumbotron .btn {
+            font-size: 21px;
+            padding: 14px 24px;
+        }
+
+        /* Supporting marketing content */
+        .marketing {
+            margin: 60px 0;
+        }
+        .marketing p + h4 {
+            margin-top: 28px;
+        }
+
+
+        /* Customize the navbar links to be fill the entire space of the .navbar */
+        .navbar .navbar-inner {
+            padding: 0;
+        }
+        .navbar .nav {
+            margin: 0;
+            display: table;
+            width: 100%;
+        }
+        .navbar .nav li {
+            display: table-cell;
+            width: 1%;
+            float: none;
+        }
+        .navbar .nav li a {
+            font-weight: bold;
+            text-align: center;
+            border-left: 1px solid rgba(255,255,255,.75);
+            border-right: 1px solid rgba(0,0,0,.1);
+        }
+        .navbar .nav li:first-child a {
+            border-left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .navbar .nav li:last-child a {
+            border-right: 0;
+            border-radius: 0 3px 3px 0;
+        }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <script>
+        $(if advert-pending == 'yes')
+            var popup = '';
+            function focusAdvert() {
+            if (window.focus) popup.focus();
+
+        }
+            function openAdvert() {
+            popup = open('$(link-advert)', 'hotspot_advert', '');
+            setTimeout("focusAdvert()", 1000);
+        }
+        $(endif)
+            function openLogout() {
+            if (window.name != 'hotspot_status') return true;
+                open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+            window.close();
+            return false;
+        }
+    </script>
+</head>
+<body $(if advert-pending == 'yes') onLoad="openAdvert()" $(endif)>
+
+    <div class="container">
+
+      <div class="masthead">
+        <h3 class="muted">Informatica Today Wi-Fi Hotspot</h3>
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li><a href="">Dashboard</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      </div>
+      <div class="alert alert-success text-center" role="alert">$(if login-by == 'trial')Benvenuto, utente di prova!$(elif login-by != 'mac')Ciao, $(username)!$(endif)</div>
+      <form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+        <table class="table table-bordered">
+            <tr><td>Indirizzo IP</td><td>$(ip)</td></tr>
+            <tr><td>Consumo upload / download</td><td>$(bytes-in-nice) / $(bytes-out-nice)</td></tr>
+        $(if session-time-left)
+            <tr><td>tempo rimanente</td><td>$(session-time-left)</td></tr>
+        $(else)
+            <tr><td>Connesso da</td><td>$(uptime)</td></tr>
+        $(endif)
+            </table>
+        $(if login-by-mac != 'yes')
+        <!-- user manager link. if user manager resides on other router, replace $(hostname) by its address
+        <button onclick="document.location='http://$(hostname)/user?subs='; return false;">status</button>
+        <!-- end of user manager link -->
+        <input type="submit" class="btn btn-primary" value="Logout">
+        $(endif)
+    </form>
+      <div class="footer">
+        <p>&copy; Informatica Today Hotspot 2021</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+  </body>
+</html>
+
